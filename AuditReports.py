@@ -85,10 +85,12 @@ def CreateAudit():
 	previoustime = currenttime - 3600000	
 	payload = {  
 	   "startTime":previoustime,
-	   "endTime":currenttime
+	   "endTime":currenttime,
+	   "page": 1,
+	   "pageSize": 100
 	}
-
-	conn.request("POST", "/api/v1/auditReport", json.dumps(payload), headers)
+#deprecated /api/v1/auditReport replaced
+	conn.request("POST", "/api/v1/auditlogEntryReport", json.dumps(payload), headers)
 
 	res = conn.getresponse()
 	data = res.read()
@@ -105,7 +107,7 @@ Audit Report Status
 def GetAudit():
 	ClearScreen()
 	print (figlet_format('Audit Report Status', font='small'))
-	conn.request("GET", "/api/v1/auditReport", headers=headers)
+	conn.request("GET", "/api/v1/auditlogEntryReport", headers=headers)
 
 	res = conn.getresponse()
 	data = res.read()
@@ -121,7 +123,7 @@ Download Audit Report
 def DownloadAudit():
 	ClearScreen()
 	print (figlet_format('Download Audit Report', font='small'))
-	conn.request("GET", "/api/v1/auditReport/download", headers=headers)
+	conn.request("GET", "/api/v1/auditlogEntryReport/download", headers=headers)
 
 	res = conn.getresponse()
 	data = res.read()
